@@ -1,23 +1,34 @@
 const webpack = require('webpack');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './src',
   output: {
-    path: '/',
-    filename: 'bundle.js'
+    path: path.join(__dirname, '../dist'),
+    filename: '[name].bundle.js'
   },
   mode: 'development',
   devtool: 'eval-source-map',
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     rules: [
       {
-        use: 'babel-loader',
-        test: /\.js$/,
+        test: /\.(js|x)$/,
         exclude: /node_modules/,
         resolve: {
           fullySpecified: false
-        }
+        },
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react']
+            }
+          }
+        ]
       },
       {
         use: ['style-loader', 'css-loader'],
@@ -27,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'client/index.html'
+      template: './index.html'
     })
   ]
 };

@@ -1,12 +1,15 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
+import { Route } from 'react-router';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import Songlist from './Songlist.js';
 import SongCreate from './SongCreate.js';
 
 export default () => {
-  <BrowserRouter>
-    <Route path="/" component={Songlist} />
-    <Route path="/song/new" component={SongCreate} />
-  </BrowserRouter>;
+  return (
+    <Router>
+      <Route exact path="/" component={Songlist} />
+      <Route path="/song-create" component={SongCreate} />
+    </Router>
+  );
 };
